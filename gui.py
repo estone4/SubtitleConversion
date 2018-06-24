@@ -23,6 +23,7 @@ class MyFirstGUI:
         self.close_button.pack()
 
     def open(self):
+        "TODO: check if the file has already been converted before continuing"
         #root.filename = tkFileDialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("srt files", "*.srt"),("all files","*.*")))
         root.filename = filedialog.askopenfilename(initialdir = ".",title = "Select file",)
         print(root.filename)
@@ -38,8 +39,8 @@ class MyFirstGUI:
         output_file = open(root.filename, "w", encoding="utf-8")
         output_file.write(MyFirstGUI.file_contents)
         output_file.close()
+        print("Saved file to " + root.filename)
 
-#file_contents = ""
 root = Tk()
 my_gui = MyFirstGUI(root)
 root.mainloop()
