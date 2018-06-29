@@ -12,7 +12,7 @@ class MyFirstGUI:
         self.master = master
         master.title("A simple GUI")
 
-        self.label = Label(master, text="This is our first GUI!")
+        self.label = Label(master, text="ISO-8859-9 to UTF-8")
         self.label.pack()
 
         self.open_button = Button(master, text="Open File", command=self.open)
@@ -24,33 +24,35 @@ class MyFirstGUI:
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.pack()
 
+    # TODO: try reading the bytes to be able to perform bitwise operations to check for utf-8 s
+
     def open(self):
-        root.filename = filedialog.askopenfilename(initialdir=".", title="Select file", )
-        print(root.filename)
-        MyFirstGUI.input_file = open(root.filename, "rb")
-        MyFirstGUI.file_contents = MyFirstGUI.input_file.read()  # read raw bytes
+        self.master.filename = filedialog.askopenfilename(initialdir=".", title="Select file", )
+        print(self.master.filename)
+        with open(self.master.filename, "rb") as f:
+            self.file_contents = f.read()  # read raw bytes
         try:
-            MyFirstGUI.decoded_bytes = str(MyFirstGUI.file_contents.decode("utf-8"))
+            self.decoded_bytes = str(self.file_contents.decode("utf-8"))
             print('File decoded as "UTF-8"')
         except Exception as e:
             print('Error decoding file as "UTF-8"')
             print(e)
             print('Decoding file as "ISO-8859-9"')
-            MyFirstGUI.decoded_bytes = str(MyFirstGUI.file_contents.decode('ISO-8859-9'))
+            self.decoded_bytes = str(self.file_contents.decode('ISO-8859-9'))
 
-        if MyFirstGUI.decoded_bytes is not None:
-            print(MyFirstGUI.decoded_bytes)
+        if self.decoded_bytes is not None:
+            print(self.decoded_bytes)
 
-        MyFirstGUI.input_file.close()
-        print("Opened " + root.filename)
-        print(MyFirstGUI.decoded_bytes)
+        f.close()
+        print("Opened " + self.master.filename)
+        print(self.decoded_bytes)
 
     def save(self):
-        root.filename = filedialog.asksaveasfilename(initialdir=".", title="Save file", )
-        MyFirstGUI.output_file = open(root.filename, "w")
-        MyFirstGUI.output_file.write(MyFirstGUI.decoded_bytes)
-        MyFirstGUI.output_file.close()
-        print("Saved file to " + root.filename)
+        self.master.filename = filedialog.asksaveasfilename(initialdir=".", title="Save file", )
+        with open(self.master.filename, "w") as f:
+            f.write(self.decoded_bytes)
+        f.close()
+        print("Saved file to " + self.master.filename)
 
 
 root = Tk()
