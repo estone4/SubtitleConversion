@@ -1,6 +1,3 @@
-import codecs
-import os
-
 #print(os.sys.platform)
 
 input_file = open('Test2.srt', 'rb')
@@ -15,7 +12,7 @@ while byte:
 
 unicode_byte_count = 0
 unicode_index = []
-byte_index = 0  # Counts the number of bytes read to tack the location
+byte_index = 0  # Counts the number of bytes read to track the location
 
 
 # need to figure out how to check each byte to s
